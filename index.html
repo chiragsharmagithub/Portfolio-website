@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Meta Tags -->
+    <title>Chirag Sharma | Experienced Software Engineer</title>
+    <meta name="description" content="The portfolio of Chirag Sharma, a creative software engineer building high-end, modern web experiences with a focus on performance and design.">
+    <meta name="keywords" content="Chirag Sharma, Software Engineer, Portfolio, Web Developer, Full Stack, Glassmorphism, GSAP, Modern UI/UX, Angular, C#, .NET, Python, E-trading">
+    <meta name="author" content="Chirag Sharma">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Chirag Sharma | Experienced Software Engineer">
+    <meta property="og:description" content="Explore the projects and experience of Chirag Sharma, a passionate software engineer.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://placehold.co/1200x630/0e0d16/f8fafc?text=Chirag+Sharma">
+    <meta property="og:url" content="#">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://placehold.co/32x32/a78bfa/0e0d16?text=CS" type="image/png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Custom Styles & Configuration -->
+    <style>
+        /* Define custom color palette and fonts for Tailwind */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'background': '#0e0d16',
+                        'panel-bg': 'rgba(23, 22, 33, 0.55)',
+                        'primary': '#7f5af0',
+                        'secondary': '#2cb67d',
+                        'text-light': '#fffffe',
+                        'text-dark': '#94a1b2',
+                        'text-header': '#fffffe',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+        
+        body {
+            background-color: #0e0d16;
+            color: #fffffe;
+            font-family: 'Inter', sans-serif;
+            cursor: none;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Updated background with brighter gradients and a new central abstract object */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(127, 90, 240, 0.20) 0%, transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(44, 182, 125, 0.20) 0%, transparent 40%),
+                        radial-gradient(circle at center, rgba(236, 72, 153, 0.15) 0%, transparent 50%); /* New abstract object gradient */
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #7f5af0, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            pointer-events: none;
+            transition: transform 0.1s ease-out;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #7f5af0;
+            border-radius: 50%;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #7f5af0;
+            border-radius: 50%;
+            transform: translate(-16px, -16px);
+            transition: all 0.2s ease-out;
+        }
+        .cursor-dot.hidden, .cursor-outline.hidden { opacity: 0; }
+        body:hover .cursor.hidden { opacity: 1; }
+        .cursor-interact { transform: scale(1.5); border-color: #ec4899; }
+        .cursor-text-interact { transform: scale(2.5); border: none; background-color: rgba(127, 90, 240, 0.5); mix-blend-mode: exclusion; }
+
+        .panel {
+            background-color: rgba(23, 22, 33, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .btn-gradient {
+            background-image: linear-gradient(to right, #7f5af0, #ec4899);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(127, 90, 240, 0.3);
+        }
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(127, 90, 240, 0.5);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0e0d16; }
+        ::-webkit-scrollbar-thumb { background: #7f5af0; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
+        
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+        
+        .timeline-item .marker {
+            position: absolute;
+            top: 0;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #7f5af0;
+            z-index: 1;
+        }
+        
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-icon-container {
+            height: 256px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05); /* Increased brightness */
+            transition: background-color 0.3s ease;
+            position: relative; /* Added for icon positioning */
+            overflow: hidden; /* Added to contain floating icons */
+        }
+        .project-card:hover .project-icon-container {
+            background: rgba(127, 90, 240, 0.12); /* Increased brightness on hover */
+        }
+        .project-icon {
+            font-size: 8rem;
+            color: #7f5af0;
+            transition: color 0.3s ease;
+        }
+        .project-card:hover .project-icon {
+            color: #ec4899;
+        }
+
+        /* Styles for the floating icons */
+        .floating-icons-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 5;
+        }
+        .floating-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: floatUp 2s forwards;
+        }
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(250%) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(0%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100%) scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Custom Cursor -->
+    <div class="cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-poppins font-bold text-text-light magnet-link">Chirag Sharma</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="nav-link text-text-dark hover:text-primary transition-colors duration-300 magnet-link">About</a>
+                <a href="#experience" class="nav-link text-text-dark hover:text-primary transition-colors duration-300 magnet-link">Experience</a>
+                <a href="#skills" class="nav-link text-text-dark hover:text-primary transition-colors duration-300 magnet-link">Skills</a>
+                <a href="#projects" class="nav-link text-text-dark hover:text-primary transition-colors duration-300 magnet-link">Projects</a>
+                <a href="#education" class="nav-link text-text-dark hover:text-primary transition-colors duration-300 magnet-link">Education</a>
+                <a href="#achievements" class="nav-link text-text-dark hover:text-primary transition-colors duration-300 magnet-link">Achievements</a>
+                <a href="#contact" class="btn-gradient text-white font-bold py-2 px-5 rounded-lg magnet-link">Contact</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-text-light focus:outline-none magnet-link">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden panel mx-4 my-2 rounded-lg">
+            <a href="#about" class="block text-center py-3 px-4 text-text-dark hover:text-primary transition-colors duration-300">About</a>
+            <a href="#experience" class="block text-center py-3 px-4 text-text-dark hover:text-primary transition-colors duration-300">Experience</a>
+            <a href="#skills" class="block text-center py-3 px-4 text-text-dark hover:text-primary transition-colors duration-300">Skills</a>
+            <a href="#projects" class="block text-center py-3 px-4 text-text-dark hover:text-primary transition-colors duration-300">Projects</a>
+            <a href="#education" class="block text-center py-3 px-4 text-text-dark hover:text-primary transition-colors duration-300">Education</a>
+            <a href="#achievements" class="block text-center py-3 px-4 text-text-dark hover:text-primary transition-colors duration-300">Achievements</a>
+            <a href="#contact" class="block text-center py-3 px-4 text-text-dark hover:text-primary transition-colors duration-300">Contact</a>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-12">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center text-center relative overflow-hidden">
+            <div class="z-10 p-6 container mx-auto flex flex-col items-center justify-center">
+                <h1 class="hero-text text-5xl md:text-7xl font-poppins font-bold text-text-header mb-2">
+                    Hi, I'm <span class="gradient-text">Chirag Sharma</span>
+                </h1>
+                <p class="hero-text text-xl md:text-2xl font-inter font-medium text-text-dark mb-4">
+                    Experienced Software Engineer
+                </p>
+                <p class="hero-text max-w-lg text-text-dark font-inter mb-8">
+                    Crafting elegant and powerful digital solutions. Specializing in modern web frameworks, eTrading systems, and creative problem-solving.
+                </p>
+                <div class="hero-text flex justify-center items-center gap-4">
+                    <a href="#projects" class="btn-gradient text-white font-bold py-3 px-8 rounded-lg magnet-link">View My Work</a>
+                    <a href="#contact" class="btn-gradient text-white font-bold py-3 px-8 rounded-lg magnet-link">Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="reveal text-3xl md:text-5xl font-poppins font-bold text-text-header text-center mb-16">About Me</h2>
+                <div class="reveal panel max-w-4xl mx-auto p-8 md:p-12 text-center">
+                    <p class="text-text-dark leading-relaxed text-lg mb-4">
+                        I am an experienced Software Engineer with a passion for building robust and scalable systems. My professional journey has focused on developing intricate eTrading platforms and innovative healthcare solutions. I'm highly proficient in modern front-end frameworks like Angular and TypeScript, backed by a strong foundation in C# and .NET for the backend. I thrive in collaborative team environments, where I enjoy mentoring junior developers and driving continuous improvement, including pioneering CI/CD implementations.
+                    </p>
+                    <p class="text-text-dark leading-relaxed text-lg">
+                        I am committed to continuous learning and am always seeking impactful roles where I can leverage my skills to solve complex problems and deliver high-quality software.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section (Professional Journey) -->
+        <section id="experience" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="reveal text-3xl md:text-5xl font-poppins font-bold text-text-header text-center mb-16">Professional Journey</h2>
+                <div class="reveal relative max-w-xl mx-auto">
+                    <div class="absolute left-0 top-0 h-full w-0.5 bg-primary rounded-full" id="timeline-progress-line"></div>
+                    
+                    <!-- Experience Item 1 -->
+                    <div class="timeline-item">
+                        <span class="marker animate-pulse-slow"></span>
+                        <div class="panel p-6 ml-10 rounded-lg shadow-xl">
+                            <h3 class="font-bold text-text-header text-xl">Software Engineer</h3>
+                            <p class="text-text-dark font-medium mb-1 text-md">Bank of America</p>
+                            <p class="text-secondary font-semibold mb-3 text-sm">07/2020 - Present</p>
+                            <ul class="list-disc list-inside text-text-dark text-sm space-y-2 mb-4">
+                                <li>Part of an internal e-trading platform development team, working on client onboarding and workflow management.</li>
+                                <li>Developed features as per user requirements, and was involved in the entire software development process, from code reviews to mentoring juniors.</li>
+                                <li>Pioneered CI/CD implementation for diverse project releases.</li>
+                                <li>Reduced the time to load from 130 seconds to 2.16 seconds by optimizing the SQL query.</li>
+                            </ul>
+                             <h4 class="font-bold text-text-header text-sm mb-2">Tech Stack:</h4>
+                             <p class="text-text-dark text-sm">Angular 7, Angular 12+, Typescript, C#, ASP.NET, WPF, MVVM, MVC</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 2 -->
+                    <div class="timeline-item">
+                        <span class="marker animate-pulse-slow"></span>
+                        <div class="panel p-6 ml-10 rounded-lg shadow-xl">
+                            <h3 class="font-bold text-text-header text-xl">Computer Vision Intern</h3>
+                            <p class="text-text-dark font-medium mb-1 text-md">MaxEster</p>
+                            <p class="text-secondary font-semibold mb-3 text-sm">05/2019 - 06/2019</p>
+                            <ul class="list-disc list-inside text-text-dark text-sm space-y-2 mb-4">
+                                <li>Engineered a Python application using OpenCV that analyzed palm lines for over 1,000 users.</li>
+                                <li>Formulated an algorithm generating a numeric value based on the length and width of palm lines.</li>
+                            </ul>
+                            <h4 class="font-bold text-text-header text-sm mb-2">Tech Stack:</h4>
+                            <p class="text-text-dark text-sm">Python, OpenCV</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Expertise Section -->
+        <section id="skills" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="reveal text-3xl md:text-5xl font-poppins font-bold text-text-header text-center mb-16">Technical Expertise</h2>
+                <div class="reveal grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Front-end Section -->
+                    <div class="panel p-6">
+                        <h3 class="text-2xl font-poppins font-bold text-text-header mb-4">Front-end</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="skill-item">
+                                <i class="fab fa-angular text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">Angular</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-js-square text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">JavaScript</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-html5 text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">HTML5</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-css3-alt text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">CSS3</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-bootstrap text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">Bootstrap</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Back-end Section -->
+                    <div class="panel p-6">
+                        <h3 class="text-2xl font-poppins font-bold text-text-header mb-4">Back-end</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="skill-item">
+                                <i class="fas fa-hashtag text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">C#</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-server text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">ASP.NET</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Database & Programming Section -->
+                    <div class="panel p-6">
+                        <h3 class="text-2xl font-poppins font-bold text-text-header mb-4">Database & Programming</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="skill-item">
+                                <i class="fas fa-database text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">SQL</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-database text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">MySQL</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-code text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">C / C++</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-python text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">Python</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- DevOps & Methodology Section -->
+                    <div class="panel p-6">
+                        <h3 class="text-2xl font-poppins font-bold text-text-header mb-4">DevOps & Methodology</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="skill-item">
+                                <i class="fab fa-git-alt text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">Git / GitHub</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-sync-alt text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">CI/CD</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-tasks text-primary mr-2"></i>
+                                <span class="text-text-dark text-sm font-medium">Agile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="reveal text-3xl md:text-5xl font-poppins font-bold text-text-header text-center mb-16">Featured Projects</h2>
+                <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Project Card 1 -->
+                    <a href="https://github.com/chiragsharmagithub/Blush-Dating-App" target="_blank" rel="noopener noreferrer" class="panel overflow-hidden group block project-card" data-icon-type="blush">
+                        <div class="relative overflow-hidden project-icon-container">
+                           <i class="fas fa-heart project-icon"></i>
+                           <div class="absolute top-4 right-4 bg-panel-bg p-3 rounded-full text-text-light hover:text-primary transition-colors duration-300">
+                                <i class="fab fa-github fa-lg"></i>
+                           </div>
+                           <div class="floating-icons-container" data-icon-type="blush"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-poppins font-bold text-text-header mb-1">Blush - Dating App</h3>
+                            <p class="text-text-dark text-sm">A full-featured dating application similar to Tinder, developed with Angular and .NET.</p>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 2 -->
+                    <a href="https://github.com/chiragsharmagithub/ExJokes-Chrome-Extension" target="_blank" rel="noopener noreferrer" class="panel overflow-hidden group block project-card" data-icon-type="jokes">
+                        <div class="relative overflow-hidden project-icon-container">
+                           <i class="fas fa-lightbulb project-icon"></i>
+                           <div class="absolute top-4 right-4 bg-panel-bg p-3 rounded-full text-text-light hover:text-primary transition-colors duration-300">
+                                <i class="fab fa-github fa-lg"></i>
+                           </div>
+                           <div class="floating-icons-container" data-icon-type="jokes"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-poppins font-bold text-text-header mb-1">ExJokes - Chrome Extension</h3>
+                            <p class="text-text-dark text-sm">A fun Google Chrome extension that fetches a new joke from an API with a single click.</p>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 3 -->
+                    <a href="https://github.com/chiragsharmagithub/Healthcare_Initials" target="_blank" rel="noopener noreferrer" class="panel overflow-hidden group block project-card" data-icon-type="healthcare">
+                        <div class="relative overflow-hidden project-icon-container">
+                           <i class="fas fa-briefcase-medical project-icon"></i>
+                           <div class="absolute top-4 right-4 bg-panel-bg p-3 rounded-full text-text-light hover:text-primary transition-colors duration-300">
+                                <i class="fab fa-github fa-lg"></i>
+                           </div>
+                           <div class="floating-icons-container" data-icon-type="healthcare"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-poppins font-bold text-text-header mb-1">Healthcare Assistant</h3>
+                            <p class="text-text-dark text-sm">A mobile-based healthcare system to help users find and book doctors and facilities.</p>
+                        </div>
+                    </a>
+
+                    <!-- Project Card 4 -->
+                    <a href="https://github.com/chiragsharmagithub/Face-recognition" target="_blank" rel="noopener noreferrer" class="panel overflow-hidden group block project-card" data-icon-type="emotion">
+                        <div class="relative overflow-hidden project-icon-container">
+                           <i class="fas fa-face-laugh project-icon"></i>
+                           <div class="absolute top-4 right-4 bg-panel-bg p-3 rounded-full text-text-light hover:text-primary transition-colors duration-300">
+                                <i class="fab fa-github fa-lg"></i>
+                           </div>
+                           <div class="floating-icons-container" data-icon-type="emotion"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-poppins font-bold text-text-header mb-1">Emotion Identification and Facial Recognition</h3>
+                            <p class="text-text-dark text-sm">A machine learning model for facial emotion recognition using Open-CV and Python.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="reveal text-3xl md:text-5xl font-poppins font-bold text-text-header text-center mb-16">Education</h2>
+                <div class="reveal panel max-w-xl mx-auto p-8 text-center">
+                    <h3 class="font-bold text-text-header text-xl">B.Tech in Computer Science and Engineering</h3>
+                    <p class="text-text-dark font-medium mb-1 text-md">Vellore Institute of Technology, Chennai</p>
+                    <p class="text-secondary font-semibold mb-3 text-sm">2016 - 2020</p>
+                    <p class="text-text-dark text-sm">Graduated with a GPA of 8.27/10.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Extracurricular & Achievements Section -->
+        <section id="achievements" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="reveal text-3xl md:text-5xl font-poppins font-bold text-text-header text-center mb-16">Extracurricular & Achievements</h2>
+                <div class="reveal relative max-w-xl mx-auto">
+                    <div class="absolute left-0 top-0 h-full w-0.5 bg-primary rounded-full" id="achievements-timeline-progress-line"></div>
+                    
+                    <!-- Achievement Item 1 -->
+                    <div class="timeline-item">
+                        <span class="marker animate-pulse-slow"></span>
+                        <div class="panel p-6 ml-10 rounded-lg shadow-xl">
+                            <h3 class="font-bold text-text-header text-xl">Co-Founder & President, Socrates Club</h3>
+                            <p class="text-secondary font-semibold mb-3 text-sm">2020</p>
+                            <p class="text-text-dark text-sm">Founded and led the Socrates Club at VIT Chennai, fostering intellectual discussions.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievement Item 2 -->
+                    <div class="timeline-item">
+                        <span class="marker animate-pulse-slow"></span>
+                        <div class="panel p-6 ml-10 rounded-lg shadow-xl">
+                            <h3 class="font-bold text-text-header text-xl">Vice President, OWASP VIT Chennai</h3>
+                            <p class="text-secondary font-semibold mb-3 text-sm">2019 - 2020</p>
+                            <p class="text-text-dark text-sm">Served as Vice President for the student chapter of OWASP, focusing on web security.</p>
+                        </div>
+                    </div>
+
+                    <!-- Achievement Item 3 -->
+                    <div class="timeline-item">
+                        <span class="marker animate-pulse-slow"></span>
+                        <div class="panel p-6 ml-10 rounded-lg shadow-xl">
+                            <h3 class="font-bold text-text-header text-xl">VITEEE All India Rank</h3>
+                            <p class="text-secondary font-semibold mb-3 text-sm">2016</p>
+                            <p class="text-text-dark text-sm">Secured All India Rank - 8409 in VITEEE among 1.5 million students.</p>
+                        </div>
+                    </div>
+
+                     <!-- Achievement Item 4 -->
+                    <div class="timeline-item">
+                        <span class="marker animate-pulse-slow"></span>
+                        <div class="panel p-6 ml-10 rounded-lg shadow-xl">
+                            <h3 class="font-bold text-text-header text-xl">NASA Astronomy Olympiad</h3>
+                            <p class="text-secondary font-semibold mb-3 text-sm">2011</p>
+                            <p class="text-text-dark text-sm">Achieved 3rd rank, Bronze medal at the State level among 2500 participants.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="reveal text-3xl md:text-5xl font-poppins font-bold text-text-header text-center mb-16">Let's Create Something Amazing</h2>
+                <div class="reveal panel max-w-4xl mx-auto p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Contact Info -->
+                    <div>
+                        <h3 class="text-3xl font-poppins font-bold text-text-header mb-4">Get in Touch</h3>
+                        <p class="text-text-dark mb-8">Feel free to reach out to me for collaborations, projects, or just to say hello.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <i class="fas fa-envelope fa-lg text-primary"></i>
+                                <a href="mailto:chiragsharmaofficials@gmail.com" class="text-text-dark hover:text-primary transition-colors duration-300">chiragsharmaofficials@gmail.com</a>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fab fa-linkedin fa-lg text-primary"></i>
+                                <a href="https://www.linkedin.com/in/chrg/" target="_blank" rel="noopener noreferrer" class="text-text-dark hover:text-primary transition-colors duration-300">linkedin.com/in/chrg</a>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fab fa-github fa-lg text-primary"></i>
+                                <a href="https://github.com/chrg" target="_blank" rel="noopener noreferrer" class="text-text-dark hover:text-primary transition-colors duration-300">github.com/chrg</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div>
+                        <h3 class="text-3xl font-poppins font-bold text-text-header mb-4">Send a Message</h3>
+                        <form action="https://formspree.io/f/your_form_id" method="POST">
+                            <div class="mb-4">
+                                <input type="text" name="name" placeholder="Your Name" required class="w-full bg-panel-bg border border-gray-700 rounded-lg py-3 px-4 text-text-light focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                            </div>
+                            <div class="mb-4">
+                                <input type="email" name="email" placeholder="Your Email" required class="w-full bg-panel-bg border border-gray-700 rounded-lg py-3 px-4 text-text-light focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                            </div>
+                            <div class="mb-4">
+                                <textarea name="message" placeholder="Your Message" rows="4" required class="w-full bg-panel-bg border border-gray-700 rounded-lg py-3 px-4 text-text-light focus:outline-none focus:ring-2 focus:ring-primary transition-all"></textarea>
+                            </div>
+                            <button type="submit" class="btn-gradient w-full text-white font-bold py-3 px-8 rounded-lg magnet-link">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-panel-bg py-8 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center text-text-dark">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://www.linkedin.com/in/chrg/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors duration-300 magnet-link">
+                    <i class="fab fa-linkedin fa-2x"></i>
+                </a>
+                <a href="mailto:chiragsharmaofficials@gmail.com" class="hover:text-primary transition-colors duration-300 magnet-link">
+                    <i class="fas fa-envelope fa-2x"></i>
+                </a>
+                <a href="https://github.com/chrg" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors duration-300 magnet-link">
+                    <i class="fab fa-github fa-2x"></i>
+                </a>
+            </div>
+            <p>&copy; <span id="current-year"></span> Chirag Sharma. Designed & Built with <i class="fas fa-heart text-primary"></i>.</p>
+        </div>
+    </footer>
+
+    <!-- JS Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <!-- Main JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- SMOOTH SCROLL (LENIS) ---
+            const lenis = new Lenis();
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // --- CUSTOM CURSOR ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            let mouseX = 0, mouseY = 0, posX = 0, posY = 0;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            const animateCursor = () => {
+                posX += (mouseX - posX) * 0.1;
+                posY += (mouseY - posY) * 0.1;
+                cursorDot.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
+                cursorOutline.style.transform = `translate3d(${posX - 16}px, ${posY - 16}px, 0)`;
+                requestAnimationFrame(animateCursor);
+            };
+            animateCursor();
+            
+            document.addEventListener('mouseenter', () => {
+                cursorDot.classList.remove('hidden');
+                cursorOutline.classList.remove('hidden');
+            });
+            document.addEventListener('mouseleave', () => {
+                cursorDot.classList.add('hidden');
+                cursorOutline.classList.add('hidden');
+            });
+
+            const interactables = document.querySelectorAll('a, button, .timeline-item, .panel');
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => cursorOutline.classList.add('cursor-interact'));
+                el.addEventListener('mouseleave', () => cursorOutline.classList.remove('cursor-interact'));
+            });
+            
+            const textElements = document.querySelectorAll('h1, h2, h3, p, span');
+            textElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursorOutline.classList.add('cursor-text-interact'));
+                el.addEventListener('mouseleave', () => cursorOutline.classList.remove('cursor-text-interact'));
+            });
+
+            // --- MAGNETIC BUTTONS ---
+            const magnetLinks = document.querySelectorAll('.magnet-link');
+            magnetLinks.forEach(link => {
+                link.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(this, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: 'power2.out' });
+                });
+                link.addEventListener('mouseleave', function() {
+                    gsap.to(this, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.3)' });
+                });
+            });
+
+            // --- GSAP ANIMATIONS ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero entrance animation
+            gsap.from(".hero-text", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power3.out",
+                delay: 0.5
+            });
+
+            // General reveal animation for sections
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => {
+                gsap.fromTo(el, 
+                    { opacity: 0, y: 50 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: el,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                );
+            });
+
+            // --- HEADER STYLE ON SCROLL ---
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('panel', 'shadow-lg');
+                } else {
+                    header.classList.remove('panel', 'shadow-lg');
+                }
+            });
+
+            // --- MOBILE MENU TOGGLE ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+            
+            // --- DYNAMIC FLOATING ICON ANIMATION ---
+            const projectCards = document.querySelectorAll('.project-card');
+            const iconSets = {
+                blush: ['fas fa-heart', 'fas fa-heart-pulse', 'fas fa-face-grin-hearts'],
+                jokes: ['fas fa-lightbulb', 'fas fa-face-laugh-beam', 'fas fa-face-laugh-squint', 'fas fa-face-grin-stars'],
+                healthcare: ['fas fa-heart-pulse', 'fas fa-briefcase-medical', 'fas fa-star-of-life', 'fas fa-truck-medical'],
+                emotion: ['fas fa-face-smile', 'fas fa-face-sad-tear', 'fas fa-face-surprise', 'fas fa-face-angry']
+            };
+            const iconColors = ['#ec4899', '#f9a8d4', '#a78bfa', '#7f5af0', '#4ade80', '#eab308'];
+
+            function createFloatingIcons(container, type) {
+                container.innerHTML = ''; // Clear previous icons
+                const iconSet = iconSets[type];
+                for (let i = 0; i < 7; i++) {
+                    const icon = document.createElement('i');
+                    const randomIconClass = iconSet[Math.floor(Math.random() * iconSet.length)];
+                    icon.className = `floating-icon ${randomIconClass}`;
+                    icon.style.color = iconColors[Math.floor(Math.random() * iconColors.length)];
+                    icon.style.left = `${Math.random() * 100}%`;
+                    icon.style.animationDelay = `${Math.random() * 0.5}s`;
+                    icon.style.animationDuration = `${1.5 + Math.random()}s`; // Different speeds
+                    container.appendChild(icon);
+                }
+            }
+
+            projectCards.forEach(card => {
+                const iconContainer = card.querySelector('.floating-icons-container');
+                const iconType = card.dataset.iconType; 
+
+                card.addEventListener('mouseenter', () => {
+                    createFloatingIcons(iconContainer, iconType);
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    setTimeout(() => {
+                         iconContainer.innerHTML = ''; // Clear icons after animation
+                    }, 1000); // Wait for the animation to finish
+                });
+            });
+
+            // --- SET CURRENT YEAR ---
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
